@@ -49,7 +49,15 @@ auto ReadCommand(string command){
 }
 
 auto main() -> int {
+    cout << "Podaj ścieżkę do pliku:" << endl;
+    string directory;
+    cin >> directory;
+    fstream currentFile(directory);
+    currentFile << "TEST";
+    currentFile.close();
     HelpPage();
+    cin.clear();
+    cin.ignore();
     string command;
     while (isRunning){
         cout << "Podaj komendę:" << endl;
