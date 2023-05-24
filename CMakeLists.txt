@@ -3,4 +3,4 @@ project(Menadzer_Hasel)
 
 set(CMAKE_CXX_STANDARD 23)
 
-add_executable(Menadzer_Hasel main.cpp Komendy.cpp)
+add_executable(Menadzer_Hasel main.cpp)

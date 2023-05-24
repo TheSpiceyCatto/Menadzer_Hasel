@@ -82,9 +82,6 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="C:/Users/s27530/Documents/GitHub/Menadzer_Hasel/Komendy.cpp">
-			<Option target="Menadzer_Hasel"/>
-		</Unit>
 		<Unit filename="C:/Users/s27530/Documents/GitHub/Menadzer_Hasel/main.cpp">
 			<Option target="Menadzer_Hasel"/>
 		</Unit>
