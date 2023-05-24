@@ -2,17 +2,9 @@
 #include <string>
 #include <algorithm>
 #include <fstream>
+#include "Komendy.h"
+using namespace komendy;
 using namespace std;
-
-
-auto HelpPage(){
-    ifstream helpFile("help.txt");
-    string line;
-    while(getline(helpFile, line)){
-        cout << line << endl;
-    }
-    helpFile.close();
-}
 
 auto OpenFile(fstream& file){
     cout << "Podaj sciezke do pliku:" << endl;
@@ -22,10 +14,11 @@ auto OpenFile(fstream& file){
     if(!file){
         file.close();
         file.open(directory, fstream::out);
+        cout << "Nie wykryto pliku! Tworze nowy plik." << endl;
         file.close();
         file.open(directory, fstream::in | fstream::out);
     }
-    HelpPage();
+    Polecenia::Pomoc();
     cin.clear();
     cin.ignore();
 }
@@ -43,21 +36,21 @@ auto ReadCommand(string command){
     const string Pomoc = "POMOC";
     const string Zamknij = "ZAMKNIJ";
     if(find(begin(Wyszukaj_Hasla), end(Wyszukaj_Hasla), command) != end(Wyszukaj_Hasla)) {
-        cout << "Jest" << endl;
+        Polecenia::Wyszukaj("SZUKAM");
     } else if (find(begin(Posortuj_Hasla), end(Posortuj_Hasla), command) != end(Posortuj_Hasla)) {
-        cout << "Sort" << endl;
+        Polecenia::Sortuj();
     } else if (find(begin(Dodaj_Haslo), end(Dodaj_Haslo), command) != end(Dodaj_Haslo)) {
-        cout << "Dod" << endl;
+        Polecenia::DodajHaslo();
     } else if (find(begin(Edytuj_Haslo), end(Edytuj_Haslo), command) != end(Edytuj_Haslo)) {
-        cout << "Edit" << endl;
+        Polecenia::EdytujHaslo();
     } else if (find(begin(Usun_Haslo), end(Usun_Haslo), command) != end(Usun_Haslo)) {
-        cout << "Usun" << endl;
+        Polecenia::UsunHaslo();
     } else if (Dodaj_Kategorie.compare(command) ==  0) {
-        cout << "DodK" << endl;
+        Polecenia::DodajKategorie();
     } else if (find(begin(Usun_Kategorie), end(Usun_Kategorie), command) != end(Usun_Kategorie)) {
-        cout << "UsunK" << endl;
+        Polecenia::UsunKategorie();
     } else if (Pomoc.compare(command) ==  0) {
-        HelpPage();
+        Polecenia::Pomoc();
     } else if (Zamknij.compare(command) == 0){
         isRunning = false;
     } else {
