@@ -44,12 +44,12 @@ auto ReadCommand(string command){
     } else if (Zamknij.compare(command) == 0){
         isRunning = false;
     } else {
-        cout << "Nie rozpoznano komendy, napisz \"Pomoc\" by zobaczyć listę komend." << endl;
+        cout << "Nie rozpoznano komendy, napisz \"Pomoc\" by zobaczyć liste komend." << endl;
     }
 }
 
 auto main() -> int {
-    cout << "Podaj ścieżkę do pliku:" << endl;
+    cout << "Podaj sciezke do pliku:" << endl;
     string directory;
     cin >> directory;
     fstream currentFile(directory);
@@ -60,7 +60,7 @@ auto main() -> int {
     cin.ignore();
     string command;
     while (isRunning){
-        cout << "Podaj komendę:" << endl;
+        cout << "Podaj komende:" << endl;
         getline(cin, command);
         transform(command.begin(), command.end(), command.begin(), ::toupper);
         ReadCommand(command);

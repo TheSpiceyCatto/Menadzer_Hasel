@@ -1,0 +1,10 @@
+Lista dostepnych komend:
+    Wyszukaj hasla - znajdz hasla zawierajace podane parametry
+    Posortuj hasla - wypisz posortowana liste hasel po danych parametrach (maximum 2)
+    Dodaj haslo - dodaj haslo do listy
+    Edytuj haslo - zmien dane hasla
+    Usun haslo - usun haslo/hasla
+    Dodaj kategorie - dodaj nowa kategorie
+    Usun kategorie - usun kategorie (UWAGA: usuniete zostana rowniez hasla w danej kategorii)
+    Pomoc - wyswietl ta strone
+    Zamknij - wyjdz z programu
