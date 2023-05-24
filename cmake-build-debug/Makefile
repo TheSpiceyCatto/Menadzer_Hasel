@@ -128,6 +128,30 @@ Menadzer_Hasel/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Menadzer_Hasel.dir\build.make CMakeFiles/Menadzer_Hasel.dir/build
 .PHONY : Menadzer_Hasel/fast
 
+Komendy.obj: Komendy.cpp.obj
+.PHONY : Komendy.obj
+
+# target to build an object file
+Komendy.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Menadzer_Hasel.dir\build.make CMakeFiles/Menadzer_Hasel.dir/Komendy.cpp.obj
+.PHONY : Komendy.cpp.obj
+
+Komendy.i: Komendy.cpp.i
+.PHONY : Komendy.i
+
+# target to preprocess a source file
+Komendy.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Menadzer_Hasel.dir\build.make CMakeFiles/Menadzer_Hasel.dir/Komendy.cpp.i
+.PHONY : Komendy.cpp.i
+
+Komendy.s: Komendy.cpp.s
+.PHONY : Komendy.s
+
+# target to generate assembly for a file
+Komendy.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Menadzer_Hasel.dir\build.make CMakeFiles/Menadzer_Hasel.dir/Komendy.cpp.s
+.PHONY : Komendy.cpp.s
+
 main.obj: main.cpp.obj
 .PHONY : main.obj
 
@@ -161,6 +185,9 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... Menadzer_Hasel
+	@echo ... Komendy.obj
+	@echo ... Komendy.i
+	@echo ... Komendy.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

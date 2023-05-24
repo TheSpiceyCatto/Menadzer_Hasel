@@ -4,13 +4,30 @@
 #include <fstream>
 using namespace std;
 
-const auto HelpPage(){
+
+auto HelpPage(){
     ifstream helpFile("help.txt");
     string line;
     while(getline(helpFile, line)){
         cout << line << endl;
     }
     helpFile.close();
+}
+
+auto OpenFile(fstream& file){
+    cout << "Podaj sciezke do pliku:" << endl;
+    string directory;
+    cin >> directory;
+    file.open(directory, fstream::in | fstream::out);
+    if(!file){
+        file.close();
+        file.open(directory, fstream::out);
+        file.close();
+        file.open(directory, fstream::in | fstream::out);
+    }
+    HelpPage();
+    cin.clear();
+    cin.ignore();
 }
 
 bool isRunning = true;
@@ -44,20 +61,14 @@ auto ReadCommand(string command){
     } else if (Zamknij.compare(command) == 0){
         isRunning = false;
     } else {
-        cout << "Nie rozpoznano komendy, napisz \"Pomoc\" by zobaczyć liste komend." << endl;
+        cout << "Nie rozpoznano komendy, napisz \"Pomoc\" by zobaczyc liste komend." << endl;
     }
 }
 
 auto main() -> int {
-    cout << "Podaj sciezke do pliku:" << endl;
-    string directory;
-    cin >> directory;
-    fstream currentFile(directory);
-    currentFile << "TEST";
-    currentFile.close();
-    HelpPage();
-    cin.clear();
-    cin.ignore();
+    fstream currentFile;
+    OpenFile(currentFile);
+
     string command;
     while (isRunning){
         cout << "Podaj komende:" << endl;
@@ -65,5 +76,7 @@ auto main() -> int {
         transform(command.begin(), command.end(), command.begin(), ::toupper);
         ReadCommand(command);
     }
+
+    currentFile.close();
     return 0;
 }

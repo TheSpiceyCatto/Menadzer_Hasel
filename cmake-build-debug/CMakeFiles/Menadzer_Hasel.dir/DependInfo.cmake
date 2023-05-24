@@ -8,6 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "C:/Users/s27530/Documents/GitHub/Menadzer_Hasel/Komendy.cpp" "CMakeFiles/Menadzer_Hasel.dir/Komendy.cpp.obj" "gcc" "CMakeFiles/Menadzer_Hasel.dir/Komendy.cpp.obj.d"
   "C:/Users/s27530/Documents/GitHub/Menadzer_Hasel/main.cpp" "CMakeFiles/Menadzer_Hasel.dir/main.cpp.obj" "gcc" "CMakeFiles/Menadzer_Hasel.dir/main.cpp.obj.d"
   )
 
