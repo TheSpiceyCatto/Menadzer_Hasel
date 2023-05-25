@@ -4,22 +4,43 @@
 #include <algorithm>
 #include <fstream>
 #include <vector>
-#include "Komendy.h"
-using namespace komendy;
+#include "Krypt_Biblioteka.h"
+using namespace Biblioteka;
 using namespace std;
 
-auto OtworzPlik(fstream& file){
+const static string masterPass = "AS!sdDeEeP0908@/kAsHdakdu";
+
+auto OtworzPlik(fstream& file, string& pass){
     cout << "Podaj sciezke do pliku:" << endl;
     string directory;
     cin >> directory;
-    file.open(directory, fstream::in | fstream::out);
+    file.open(directory, ios::in | ios::out);
     if(!file){
         file.close();
-        file.open(directory, fstream::out);
+        file.clear();
+        file.open(directory, ios::out);
         cout << "Nie wykryto pliku! Tworze nowy plik." << endl;
         file.close();
-        file.open(directory, fstream::in | fstream::out);
+        file.clear();
+        file.open(directory, ios::in | ios::out);
     }
+    string haslo;
+    if(file.peek() == fstream::traits_type::eof()){
+        cout << "Plik pusty, stwórz hasło:" << endl;
+        cin >> haslo;
+        file.seekg(0, ios::beg);
+        file << Polecenia::Enkrypcja(haslo, masterPass);
+    } else {
+        cout << "Podaj haslo:" << endl;
+        cin >> haslo;
+        string correctPass;
+        getline(file, correctPass);
+        while(Polecenia::Enkrypcja(haslo, masterPass) != correctPass){
+            cout << "Haslo niepoprawne, sprobuj ponownie:" << endl;
+            cin >> haslo;
+        }
+    }
+    pass = haslo;
     Polecenia::Pomoc();
     cin.clear();
     cin.ignore();
@@ -27,7 +48,7 @@ auto OtworzPlik(fstream& file){
 
 bool isRunning = true;
 
-auto CzytajKomendy(string command){
+auto CzytajKomendy(string command, string pass){
     const string Wyszukaj_Hasla[] = {"WYSZUKAJ HASŁA", "WYSZUKAJ HASłA", "WYSZUKAJ HASLA"};
     const string Posortuj_Hasla[] = {"POSORTUJ HASŁA", "POSORTUJ HASłA", "POSORTUJ HASLA"};
     const string Dodaj_Haslo[] = {"DODAJ HASŁO", "POSORTUJ HASłO", "DODAJ HASLO"};
@@ -38,40 +59,40 @@ auto CzytajKomendy(string command){
     const string Pomoc = "POMOC";
     const string Zamknij = "ZAMKNIJ";
     if(find(begin(Wyszukaj_Hasla), end(Wyszukaj_Hasla), command) != end(Wyszukaj_Hasla)) {
-        Polecenia::Wyszukaj("SZUKAM");
+        Haslo::Wyszukaj("");
     } else if (find(begin(Posortuj_Hasla), end(Posortuj_Hasla), command) != end(Posortuj_Hasla)) {
-        Polecenia::Sortuj();
+        Haslo::Sortuj();
     } else if (find(begin(Dodaj_Haslo), end(Dodaj_Haslo), command) != end(Dodaj_Haslo)) {
-        Polecenia::DodajHaslo();
+        Haslo::DodajHaslo();
     } else if (find(begin(Edytuj_Haslo), end(Edytuj_Haslo), command) != end(Edytuj_Haslo)) {
-        Polecenia::EdytujHaslo();
+        Haslo::EdytujHaslo();
     } else if (find(begin(Usun_Haslo), end(Usun_Haslo), command) != end(Usun_Haslo)) {
-        Polecenia::UsunHaslo();
+        Haslo::UsunHaslo();
     } else if (Dodaj_Kategorie.compare(command) ==  0) {
-        Polecenia::DodajKategorie();
+        Haslo::DodajKategorie();
     } else if (find(begin(Usun_Kategorie), end(Usun_Kategorie), command) != end(Usun_Kategorie)) {
-        Polecenia::UsunKategorie();
+        Haslo::UsunKategorie();
     } else if (Pomoc.compare(command) ==  0) {
         Polecenia::Pomoc();
     } else if (Zamknij.compare(command) == 0){
         isRunning = false;
     } else {
-        cout << "Nie rozpoznano komendy, napisz \"Pomoc\" by zobaczyc liste komend." << endl;
+        cout << "Nie rozpoznano Biblioteka, napisz \"Pomoc\" by zobaczyc liste komend." << endl;
     }
 }
 
 auto main() -> int {
     fstream currentFile;
-    OtworzPlik(currentFile);
+    string currentPass;
+    OtworzPlik(currentFile, currentPass);
 
     string command;
     while (isRunning){
         cout << "Podaj komende:" << endl;
         getline(cin, command);
         transform(command.begin(), command.end(), command.begin(), ::toupper);
-        CzytajKomendy(command);
+        CzytajKomendy(command, currentPass);
     }
-
     currentFile.close();
     return 0;
 }
