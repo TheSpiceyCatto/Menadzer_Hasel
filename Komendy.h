@@ -46,6 +46,32 @@ namespace komendy{
             }
             helpFile.close();
         }
+
+    private:
+        static auto Enkrypcja(string haslo, string key){
+            string result = "";
+            int keyPos = 0;
+            stringstream strStream;
+            for(string::iterator it = haslo.begin(); it != haslo.end(); ++it){
+                char shift = key[keyPos % key.length()];
+                int character = *it + shift;
+                strStream << hex << character;
+                keyPos++;
+            }
+            return strStream.str();
+        }
+
+        static auto Dekrypcja(string haslo, string key){
+            string result = "";
+            int keyPos = 0;
+            for(int i = 0; i < haslo.length(); i+=2){
+                char shift = key[keyPos % key.length()];
+                string hexVal = string() + haslo[i] + haslo[i + 1];
+                result += char(stoi(hexVal, nullptr, 16) - shift);
+                keyPos++;
+            }
+            return result;
+        }
     };
 }
 

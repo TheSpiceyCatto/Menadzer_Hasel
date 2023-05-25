@@ -1,12 +1,14 @@
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <algorithm>
 #include <fstream>
+#include <vector>
 #include "Komendy.h"
 using namespace komendy;
 using namespace std;
 
-auto OpenFile(fstream& file){
+auto OtworzPlik(fstream& file){
     cout << "Podaj sciezke do pliku:" << endl;
     string directory;
     cin >> directory;
@@ -25,7 +27,7 @@ auto OpenFile(fstream& file){
 
 bool isRunning = true;
 
-auto ReadCommand(string command){
+auto CzytajKomendy(string command){
     const string Wyszukaj_Hasla[] = {"WYSZUKAJ HASŁA", "WYSZUKAJ HASłA", "WYSZUKAJ HASLA"};
     const string Posortuj_Hasla[] = {"POSORTUJ HASŁA", "POSORTUJ HASłA", "POSORTUJ HASLA"};
     const string Dodaj_Haslo[] = {"DODAJ HASŁO", "POSORTUJ HASłO", "DODAJ HASLO"};
@@ -60,14 +62,14 @@ auto ReadCommand(string command){
 
 auto main() -> int {
     fstream currentFile;
-    OpenFile(currentFile);
+    OtworzPlik(currentFile);
 
     string command;
     while (isRunning){
         cout << "Podaj komende:" << endl;
         getline(cin, command);
         transform(command.begin(), command.end(), command.begin(), ::toupper);
-        ReadCommand(command);
+        CzytajKomendy(command);
     }
 
     currentFile.close();
