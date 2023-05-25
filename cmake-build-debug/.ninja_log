@@ -1,4 +1,14 @@
 # ninja log v5
 722	791	1685037827780896254	Menadzer_Hasel	2e14ec779327aca
-1	722	1685037827711896103	CMakeFiles/Menadzer_Hasel.dir/main.cpp.o	79b31eaf18fb8aff
+0	815	1685047028576642650	CMakeFiles/Menadzer_Hasel.dir/main.cpp.o	79b31eaf18fb8aff
 1	398	1684951117943736786	CMakeFiles/Menadzer_Hasel.dir/Haslo.cpp.o	2ed5edbc4870b9d6
+1	619	1685048010390603252	CMakeFiles/Menadzer_Hasel.dir/Haslo.cpp.o	2ed5edbc4870b9d6
+0	811	1685048028800639930	CMakeFiles/Menadzer_Hasel.dir/main.cpp.o	79b31eaf18fb8aff
+0	791	1685048178114937419	CMakeFiles/Menadzer_Hasel.dir/main.cpp.o	79b31eaf18fb8aff
+2	666	1685048216897014674	CMakeFiles/Menadzer_Hasel.dir/Haslo.cpp.o	2ed5edbc4870b9d6
+1	856	1685048217087015053	CMakeFiles/Menadzer_Hasel.dir/main.cpp.o	79b31eaf18fb8aff
+1	583	1685048244075068814	CMakeFiles/Menadzer_Hasel.dir/Haslo.cpp.o	2ed5edbc4870b9d6
+1	553	1685048459183497320	CMakeFiles/Menadzer_Hasel.dir/Haslo.cpp.o	2ed5edbc4870b9d6
+1	698	1685048459328497609	CMakeFiles/Menadzer_Hasel.dir/main.cpp.o	79b31eaf18fb8aff
+1	646	1685048600494778918	CMakeFiles/Menadzer_Hasel.dir/Haslo.cpp.o	2ed5edbc4870b9d6
+1	787	1685048600635779199	CMakeFiles/Menadzer_Hasel.dir/main.cpp.o	79b31eaf18fb8aff

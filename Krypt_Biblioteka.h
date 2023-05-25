@@ -8,43 +8,6 @@ using namespace std;
 #define MENADZER_HASEL_KOMENDY_H
 #pragma once
 
-class Haslo{
-    static vector<Haslo> hasla;
-
-    string nazwa, szyfr, kategoria;
-    string strona, login;
-
-public:
-    Haslo(const string &nazwa, const string &szyfr, const string &kategoria) : nazwa(nazwa), szyfr(szyfr), kategoria(kategoria) {}
-
-    static auto Wyszukaj(string mess){
-        cout << mess << endl;
-    }
-
-    static auto Sortuj(){
-
-    }
-
-    static auto DodajHaslo(){
-
-    }
-
-    static auto EdytujHaslo(){
-
-    }
-
-    static auto UsunHaslo(){
-
-    }
-
-    static auto DodajKategorie(){
-
-    }
-
-    static auto UsunKategorie(){
-
-    }
-};
 
 namespace Biblioteka{
     class Polecenia{

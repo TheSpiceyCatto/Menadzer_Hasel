@@ -5,8 +5,10 @@
 #include <fstream>
 #include <vector>
 #include "Krypt_Biblioteka.h"
+#include "Haslo.h"
 using namespace Biblioteka;
 using namespace std;
+
 
 const static string masterPass = "AS!sdDeEeP0908@/kAsHdakdu";
 
@@ -48,7 +50,7 @@ auto OtworzPlik(fstream& file, string& pass){
 
 bool isRunning = true;
 
-auto CzytajKomendy(string command, string pass){
+auto CzytajKomendy(string pass){
     const string Wyszukaj_Hasla[] = {"WYSZUKAJ HASŁA", "WYSZUKAJ HASłA", "WYSZUKAJ HASLA"};
     const string Posortuj_Hasla[] = {"POSORTUJ HASŁA", "POSORTUJ HASłA", "POSORTUJ HASLA"};
     const string Dodaj_Haslo[] = {"DODAJ HASŁO", "POSORTUJ HASłO", "DODAJ HASLO"};
@@ -58,6 +60,12 @@ auto CzytajKomendy(string command, string pass){
     const string Usun_Kategorie[] = {"USUŃ KATEGORIE", "USUń KATEGORIE", "USUN KATEGORIE"};
     const string Pomoc = "POMOC";
     const string Zamknij = "ZAMKNIJ";
+
+    string command;
+    cout << "Podaj komende:" << endl;
+    getline(cin, command);
+    transform(command.begin(), command.end(), command.begin(), ::toupper);
+
     if(find(begin(Wyszukaj_Hasla), end(Wyszukaj_Hasla), command) != end(Wyszukaj_Hasla)) {
         Haslo::Wyszukaj("");
     } else if (find(begin(Posortuj_Hasla), end(Posortuj_Hasla), command) != end(Posortuj_Hasla)) {
@@ -86,12 +94,8 @@ auto main() -> int {
     string currentPass;
     OtworzPlik(currentFile, currentPass);
 
-    string command;
     while (isRunning){
-        cout << "Podaj komende:" << endl;
-        getline(cin, command);
-        transform(command.begin(), command.end(), command.begin(), ::toupper);
-        CzytajKomendy(command, currentPass);
+        CzytajKomendy(currentPass);
     }
     currentFile.close();
     return 0;
