@@ -67,19 +67,19 @@ auto CzytajKomendy(string pass){
     transform(command.begin(), command.end(), command.begin(), ::toupper);
 
     if(find(begin(Wyszukaj_Hasla), end(Wyszukaj_Hasla), command) != end(Wyszukaj_Hasla)) {
-        Haslo::Wyszukaj("");
+//        Haslo::Wyszukaj("");
     } else if (find(begin(Posortuj_Hasla), end(Posortuj_Hasla), command) != end(Posortuj_Hasla)) {
-        Haslo::Sortuj();
+//        Haslo::Sortuj();
     } else if (find(begin(Dodaj_Haslo), end(Dodaj_Haslo), command) != end(Dodaj_Haslo)) {
-        Haslo::DodajHaslo();
+//        Haslo::DodajHaslo();
     } else if (find(begin(Edytuj_Haslo), end(Edytuj_Haslo), command) != end(Edytuj_Haslo)) {
-        Haslo::EdytujHaslo();
+//        Haslo::EdytujHaslo();
     } else if (find(begin(Usun_Haslo), end(Usun_Haslo), command) != end(Usun_Haslo)) {
-        Haslo::UsunHaslo();
+//        Haslo::UsunHaslo();
     } else if (Dodaj_Kategorie.compare(command) ==  0) {
-        Haslo::DodajKategorie();
+//        Haslo::DodajKategorie();
     } else if (find(begin(Usun_Kategorie), end(Usun_Kategorie), command) != end(Usun_Kategorie)) {
-        Haslo::UsunKategorie();
+//        Haslo::UsunKategorie();
     } else if (Pomoc.compare(command) ==  0) {
         Polecenia::Pomoc();
     } else if (Zamknij.compare(command) == 0){

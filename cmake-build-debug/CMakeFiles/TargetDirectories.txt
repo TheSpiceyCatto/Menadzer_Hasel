@@ -1,3 +1,3 @@
-/home/spiceycatto/CLionProjects/Menadzer_Hasel/cmake-build-debug/CMakeFiles/Menadzer_Hasel.dir
-/home/spiceycatto/CLionProjects/Menadzer_Hasel/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/spiceycatto/CLionProjects/Menadzer_Hasel/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+E:/Users/Maciek/Documents/GitHub/Menadzer_Hasel/cmake-build-debug/CMakeFiles/Menadzer_Hasel.dir
+E:/Users/Maciek/Documents/GitHub/Menadzer_Hasel/cmake-build-debug/CMakeFiles/edit_cache.dir
+E:/Users/Maciek/Documents/GitHub/Menadzer_Hasel/cmake-build-debug/CMakeFiles/rebuild_cache.dir
