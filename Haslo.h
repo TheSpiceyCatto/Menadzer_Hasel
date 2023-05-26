@@ -24,13 +24,6 @@ public:
     static void DodajHaslo();
     static string WybierzKategorie();
 
-    void setStrona(const string &strona) {
-        this->strona = strona;
-    }
-
-    void setLogin(const string &login) {
-        this->login = login;
-    }
 };
 
 #endif // HASLO_H
