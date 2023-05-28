@@ -7,14 +7,13 @@ using namespace std;
 
 #ifndef MENADZER_HASEL_KOMENDY_H
 #define MENADZER_HASEL_KOMENDY_H
-#pragma once
 
 
 namespace Biblioteka{
-    class Kryptografia{
+    class Functions{
     public:
-        static auto Enkrypcja(string haslo, string key){
-            string result = "";
+        static auto encryption(string haslo, string key){
+            string result;
             int keyPos = 0;
             stringstream strStream;
             for(string::iterator it = haslo.begin(); it != haslo.end(); ++it){
@@ -26,7 +25,7 @@ namespace Biblioteka{
             return strStream.str();
         }
 
-        static auto Dekrypcja(string haslo, string key){
+        static auto decryption(string haslo, string key){
             string result = "";
             int keyPos = 0;
             for(int i = 0; i < haslo.length(); i+=2){
@@ -37,110 +36,52 @@ namespace Biblioteka{
             }
             return result;
         }
-    };
-    class Haslo {
-        string nazwa, szyfr, kategoria;
-        string strona, login;
 
-        Haslo(string nazwa, string szyfr, string kategoria) : nazwa(nazwa), szyfr(szyfr), kategoria(kategoria) {}
-
-    public:
-        void setStrona(const string &strona) {
-            this->strona = strona;
-        }
-
-        void setLogin(const string &login) {
-            this->login = login;
-        }
-
-        static void Wyszukaj(string mess) {
-            cout << mess << endl;
-        }
-
-        static void Sortuj() {}
-
-        static void EdytujHaslo() {}
-
-        static void UsunHaslo() {}
-
-        static void DodajKategorie(vector<string>& kategorie) {
-            string kategoria;
-            cout << "Podaj nowa kategorie:" << endl;
-            cin >> kategoria;
-            bool isValid;
-            do {
-                isValid = true;
-                for (auto it = kategorie.begin(); it != kategorie.end(); ++it) {
-                    if (it->compare(kategoria) == 0){
-                        isValid = false;
-                        cout << "Kategoria juz istnieje, sprobuj ponownie:" << endl;
-                        cin >> kategoria;
-                    }
+        static void OpenFile(fstream& file, string& currentKey, const string& masterKey){
+            cout << "Podaj sciezke do pliku:" << endl;
+            string directory;
+            cin >> directory;
+            file.open(directory, ios::in | ios::out);
+            if(!file){
+                file.close();
+                file.clear();
+                file.open(directory, ios::out);
+                cout << "Nie wykryto pliku! Tworze nowy plik." << endl;
+                file.close();
+                file.clear();
+                file.open(directory, ios::in | ios::out);
+            }
+            string haslo;
+            if(file.peek() == fstream::traits_type::eof()){
+                cout << "Plik pusty, stwórz hasło:" << endl;
+                cin >> haslo;
+                file.seekg(0, ios::beg);
+                file << Functions::encryption(haslo, masterKey);
+            } else {
+                cout << "Podaj haslo:" << endl;
+                cin >> haslo;
+                string correctPass;
+                getline(file, correctPass);
+                while(Functions::encryption(haslo, masterKey) != correctPass){
+                    cout << "Haslo niepoprawne, sprobuj ponownie:" << endl;
+                    cin >> haslo;
                 }
-            } while (!isValid);
-            kategorie.push_back(kategoria);
-            cout << "Kategoria dodana" << endl;
+            }
+            currentKey = haslo;
             cin.clear();
             cin.ignore();
         }
 
-        static void UsunKategorie() {}
-
-        static void DodajHaslo(vector<Haslo>& hasla, vector<string>& kategorie, string key){
-            if(!kategorie.empty()){
-                string buffNazwa, buffHaslo, buffKategoria, buffStrona, buffLogin;
-
-                cout << "Podaj nazwe hasla:" << endl;
-                getline(cin, buffNazwa);
-                while(cin.fail() || buffNazwa.empty()){
-                    cout << "Nie podano nazwy, sprobuj ponownie:" << endl;
-                    getline(cin, buffNazwa);
-                }
-
-                cout << "Podaj login (zostaw puste by pominac):" << endl;
-                getline(cin, buffLogin);
-
-                do {
-                    string input;
-                    cout << "Czy wygenerowac haslo? Y/n" << endl;
-                    getline(cin, input);
-                    if (toupper(input[0]) == 'N') {
-                        cout << "Podaj haslo:" << endl;
-                        getline(cin, buffHaslo);
-                        while (cin.fail() || buffHaslo.empty()) {
-                            cout << "Nie podano hasla, sprobuj ponownie:" << endl;
-                            getline(cin, buffHaslo);
-                        }
-                    } else if (toupper(input[0]) == 'Y' || input[0] == '\0') {
-                        buffHaslo = GeneratePassword();
-                    } else {
-                        cout << "Nie rozpoznano odpowiedzi" << endl;
-                    }
-                } while (buffHaslo.empty());
-
-                cout << "Podaj strone WWW (zostaw puste by pominac):" << endl;
-                getline(cin, buffStrona);
-
-                buffKategoria = ChooseCategory(kategorie);
-
-                Haslo haslo(buffNazwa, buffHaslo, buffKategoria);
-
-                if(!buffStrona.empty()){
-                    haslo.setStrona(buffStrona);
-                }
-                if(!buffLogin.empty()){
-                    haslo.setLogin(buffLogin);
-                }
-                hasla.push_back(haslo);
-                cin.clear();
-                cin.ignore();
-            } else {
-                cout << "Brak kategorii, sprobuj \"Pomoc\" lub \"Dodaj Kategorie\"" << endl;
+        static void helpPage(string dir){
+            ifstream helpFile(dir);
+            string line;
+            while(getline(helpFile, line)){
+                cout << line << endl;
             }
+            helpFile.close();
         }
 
-    //private:
-        static string ChooseCategory(vector<string>& kategorie){
+        static string chooseCategory(vector<string>& kategorie){
             cout << "Wybierz kategorie (podaj numer):" << endl;
             for(int i = 0; i < kategorie.size(); i++){
                 cout << i+1 << ". " << kategorie[i] << endl;
@@ -158,7 +99,34 @@ namespace Biblioteka{
             return kategorie.at(choice-1);
         }
 
-        static string GeneratePassword(){
+        static string evaluatePassword(string haslo){
+            int score = haslo.size();
+            bool lower = false, upper = false, special = false;
+            for (auto it = haslo.begin(); it != haslo.end(); ++it) {
+                int val = (int)*it;
+                if (islower(val))
+                    lower = true;
+                if (isupper(val))
+                    upper = true;
+                if ((val >= 33 && val <= 47) || (val >= 60 && val <= 64) || (val >= 91 && val <= 96) || (val >= 123 && val <= 126))
+                    special = true;
+            }
+            if (lower && upper)
+                score += 3;
+            if (special)
+                score += 2;
+            if (score < 10){
+                return "slabe";
+            } else if (score < 15){
+                return "dobre";
+            } else if (score < 20){
+                return "bardzo dobre";
+            } else if (score < 30){
+                return "bardzo, ale to bardzo dobre";
+            }
+        }
+
+        static string generatePassword(){
             int charNum;
             bool upLow, special, numbers;
             string input;
@@ -175,48 +143,27 @@ namespace Biblioteka{
             Boolean_Question("Czy uzywac liczb? Y/n", numbers);
             Boolean_Question("Czy uzywac znakow specjalnych? Y/n", special);
 
-            int letterMax = upLow ? 1 : 0;
             int choiceMin = numbers ? 1 : 2;
             int choiceMax = special ? 3 : 2;
             string result;
             for (int i = 0; i < charNum; ++i) {
                 int randChoice = getRandomNumber(choiceMin, choiceMax);
-                switch (randChoice) {
-                    case 1:
-                        //liczby
-                        result += (char) getRandomNumber(48, 57);
-                        break;
-                    case 2:
-                        //litery
-                        if(getRandomNumber(0, letterMax) == 1){
-                            result += (char)getRandomNumber(65, 90);
-                        } else {
-                            result += (char) getRandomNumber(97, 122);
-                        }
-                        break;
-                    case 3:
-                        //znaki specjalne
-                        int specialChoice = getRandomNumber(1, 4);
-                        switch (specialChoice) {
-                            case 1:
-                                result += (char)getRandomNumber(33, 47);
-                                break;
-                            case 2:
-                                result += (char) getRandomNumber(58, 64);
-                                break;
-                            case 3:
-                                result += (char) getRandomNumber(91, 96);
-                                break;
-                            case 4:
-                                result += (char) getRandomNumber(123, 126);
-                                break;
-                        }
-                        break;
+                if (randChoice == 1) {
+                    result += (char)getRandomNumber(48, 57);
+                } else if (randChoice == 2) {
+                    if(upLow && getRandomNumber(0, 1) == 1){
+                        result += (char)getRandomNumber(65, 90);
+                    } else {
+                        result += (char) getRandomNumber(97, 122);
+                    }
+                } else if (randChoice == 3) {
+                    string specialChars = "!\"#$%&'()*+,-./:<=>?@[\\]^_`{|}~";
+                    int randomIndex = getRandomNumber(0, specialChars.length() - 1);
+                    result += specialChars[randomIndex];
                 }
             }
             return result;
         }
-
         static void Boolean_Question(const string mess, bool& result){
             bool answered = false;
             string input;

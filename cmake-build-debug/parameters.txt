@@ -1,0 +1,8 @@
+Mozliwe parametry:
+    N - nazwa
+    H - haslo
+    K - kategoria
+    S - strona
+    L - login
+    brak parametrow - wyswietl wszystko
+Przyklad korzystania: "nks" - szukanie hasel z dana nazwa, kategoria, strona.
