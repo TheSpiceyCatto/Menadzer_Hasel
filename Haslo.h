@@ -105,9 +105,35 @@ public:
         cin.ignore();
     }
 
-    static void UsunKategorie() {}
+    static void UsunKategorie(string directory, vector<Haslo>& hasla, vector<string>& kategorie, string key) {
+        fstream file(directory);
+        string choice = Functions::chooseCategory(kategorie);
+        kategorie.erase(find(kategorie.begin(), kategorie.end(), choice));
+        file.clear();
+        file.seekg(0, ios::beg);
+        vector<string> lines;
+        string line;
+        while (getline(file, line)){
+            string decryptedLine = Functions::decryption(line, key);
+            if (decryptedLine.find("Kategoria: " + choice) == string::npos){
+                lines.push_back(line);
+            }
+        }
 
-    static void DodajHaslo(vector<Haslo>& hasla, vector<string>& kategorie, fstream& file, string key){
+        file.clear();
+        file.close();
+        file.open("a", std::ofstream::out | std::ofstream::trunc);
+        file.close();
+        file.open("a", ios::in | ios::out);
+        for (auto e : lines) {
+            file << e << endl;
+        }
+        hasla.erase(remove_if(hasla.begin(), hasla.end(), [choice](Haslo e) {return e.getKategoria().compare(choice) == 0;}), hasla.end());
+        cin.clear();
+        cin.ignore();
+    }
+
+    static void DodajHaslo(vector<Haslo>& hasla, vector<string>& kategorie, string directory, string key){
         if(!kategorie.empty()){
             string buffNazwa, buffHaslo, buffKategoria, buffStrona, buffLogin;
 
@@ -169,7 +195,7 @@ public:
             }
 
             hasla.push_back(haslo);
-            writePassword(file, haslo, key);
+            writePassword(directory, haslo, key);
 
             cin.clear();
             cin.ignore();
@@ -178,14 +204,16 @@ public:
         }
     }
 
-    static void readFile(fstream& file, vector<Haslo>& hasla, vector<string>& kategorie, string key){
+    static void readFile(string directory, vector<Haslo>& hasla, vector<string>& kategorie, string key){
+        fstream file;
+        file.open(directory, ios::in | ios::out);
         string nazwa, login, haslo, kategoria, strona;
         int startPos, endPos;
         string line;
+        getline(file, line);
         while(getline(file, line)) {
             if (!line.empty()){
                 line = Functions::decryption(line, key);
-                cout << line << endl;
 
                 bool hasLogin = line.find("; Login:") != string::npos;
                 bool hasSite = line.find("; Strona:") != string::npos;
@@ -206,10 +234,7 @@ public:
 
                 startPos = line.find("Kategoria: ") + 11;
                 endPos = hasSite ? line.find("; Strona:") : line.rfind(";");
-                cout << startPos << endl;
-                cout << endPos << endl;
                 kategoria = line.substr(startPos, endPos - startPos);
-                cout << kategoria << endl;
 
                 if (hasSite){
                     startPos = line.find("Strona: ") + 8;
@@ -229,13 +254,15 @@ public:
                 }
             }
         }
+        file.close();
     }
 
 private:
-    static void writePassword(fstream& file, Haslo& haslo, string& key){
-        file.clear();
+    static void writePassword(string directory, Haslo& haslo, string& key){
+        fstream file(directory);
         file.seekp(0, ios::end);
         file << endl << Functions::encryption(haslo.outputInfo(), key);
+        file.close();
     }
 
     static void filterHaslaByGetter(vector<Haslo> hasla, vector<Haslo>& buffHasla, const string& input, const string& (Haslo::*getter)() const) {

@@ -37,10 +37,8 @@ namespace Biblioteka{
             return result;
         }
 
-        static void OpenFile(fstream& file, string& currentKey, const string& masterKey){
-            cout << "Podaj sciezke do pliku:" << endl;
-            string directory;
-            cin >> directory;
+        static void OpenFile(string directory, string& currentKey, const string& masterKey){
+            fstream file;
             file.open(directory, ios::in | ios::out);
             if(!file){
                 file.close();
@@ -68,6 +66,7 @@ namespace Biblioteka{
                 }
             }
             currentKey = haslo;
+            file.close();
             cin.clear();
             cin.ignore();
         }

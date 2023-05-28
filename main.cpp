@@ -15,7 +15,7 @@ static string currentKey;
 
 bool isRunning = true;
 
-auto ReadCommands(vector<Haslo>& hasla, vector<string>& kategorie, fstream& file){
+auto ReadCommands(vector<Haslo>& hasla, vector<string>& kategorie, string directory){
     const string Wyszukaj_Hasla[] = {"WYSZUKAJ HASŁA", "WYSZUKAJ HASłA", "WYSZUKAJ HASLA"};
     const string Posortuj_Hasla[] = {"POSORTUJ HASŁA", "POSORTUJ HASłA", "POSORTUJ HASLA"};
     const string Dodaj_Haslo[] = {"DODAJ HASŁO", "POSORTUJ HASłO", "DODAJ HASLO"};
@@ -36,7 +36,7 @@ auto ReadCommands(vector<Haslo>& hasla, vector<string>& kategorie, fstream& file
     } else if (find(begin(Posortuj_Hasla), end(Posortuj_Hasla), command) != end(Posortuj_Hasla)) {
         Haslo::Sortuj();
     } else if (find(begin(Dodaj_Haslo), end(Dodaj_Haslo), command) != end(Dodaj_Haslo)) {
-        Haslo::DodajHaslo(hasla, kategorie, file, currentKey);
+        Haslo::DodajHaslo(hasla, kategorie, directory, currentKey);
     } else if (find(begin(Edytuj_Haslo), end(Edytuj_Haslo), command) != end(Edytuj_Haslo)) {
         Haslo::EdytujHaslo();
     } else if (find(begin(Usun_Haslo), end(Usun_Haslo), command) != end(Usun_Haslo)) {
@@ -44,7 +44,7 @@ auto ReadCommands(vector<Haslo>& hasla, vector<string>& kategorie, fstream& file
     } else if (Dodaj_Kategorie.compare(command) ==  0) {
         Haslo::DodajKategorie(kategorie);
     } else if (find(begin(Usun_Kategorie), end(Usun_Kategorie), command) != end(Usun_Kategorie)) {
-        Haslo::UsunKategorie();
+        Haslo::UsunKategorie(directory, hasla, kategorie, currentKey);
     } else if (Pomoc.compare(command) ==  0) {
         Functions::helpPage("help.txt");
     } else if (Zamknij.compare(command) == 0){
@@ -55,18 +55,19 @@ auto ReadCommands(vector<Haslo>& hasla, vector<string>& kategorie, fstream& file
 }
 
 auto main() -> int {
-    fstream currentFile;
-    Functions::OpenFile(currentFile, currentKey, masterKey);
+    cout << "Podaj sciezke do pliku:" << endl;
+    string directory;
+    cin >> directory;
+    Functions::OpenFile(directory, currentKey, masterKey);
     Functions::helpPage("help.txt");
 
     vector<Haslo> hasla;
     vector<string> kategorie;
 
-    Haslo::readFile(currentFile, hasla, kategorie, currentKey);
+    Haslo::readFile(directory, hasla, kategorie, currentKey);
 
     while (isRunning){
-        ReadCommands(hasla, kategorie, currentFile);
+        ReadCommands(hasla, kategorie, directory);
     }
-    currentFile.close();
     return 0;
 }
