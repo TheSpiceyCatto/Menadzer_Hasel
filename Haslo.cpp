@@ -1,4 +1,3 @@
-#include "Haslo.h"
+//#include "Haslo.h"
 #include <iostream>
 using namespace std;
-
