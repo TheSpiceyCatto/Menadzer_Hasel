@@ -5,6 +5,11 @@
 using namespace std;
 
 namespace AddCategory{
+    /**
+     * Funkcja dodaje nową kategorię podaną przez użytkownika.
+     *
+     * @param kategorie Referencja do vectora z aktualnymi kategoriami.
+     */
     void DodajKategorie(vector<string>& kategorie);
 }
 

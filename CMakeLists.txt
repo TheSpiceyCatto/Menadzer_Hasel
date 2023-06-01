@@ -16,4 +16,4 @@ add_executable(Menadzer_Hasel
         commands/DeleteCategory.h
         commands/DeleteCategory.cpp
         commands/AddPassword.h
-        commands/AddPassword.cpp ChooseFromVector.tpp commands/DeletePassword.cpp)
+        commands/AddPassword.cpp ChooseFromVector.tpp commands/DeletePassword.cpp main.h)

@@ -84,9 +84,9 @@ string AddPassword::generatePassword(){
     }
     charNum = stoi(input);
 
-    Functions::booleanQuestion("Czy uzywac wielkich i malych liter? Y/n", upLow);
-    Functions::booleanQuestion("Czy uzywac liczb? Y/n", numbers);
-    Functions::booleanQuestion("Czy uzywac znakow specjalnych? Y/n", special);
+    upLow = Functions::booleanQuestion("Czy uzywac wielkich i malych liter? Y/n");
+    numbers = Functions::booleanQuestion("Czy uzywac liczb? Y/n");
+    special = Functions::booleanQuestion("Czy uzywac znakow specjalnych? Y/n");
 
     int choiceMin = numbers ? 1 : 2;
     int choiceMax = special ? 3 : 2;

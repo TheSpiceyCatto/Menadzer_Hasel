@@ -2,7 +2,7 @@
 
 void DeletePassword::UsunHaslo(string directory, vector<Password>& hasla, string key){
     bool less;
-    Functions::booleanQuestion("Czy chcesz usunac tylko jedno haslo? Y/n", less);
+    less = Functions::booleanQuestion("Czy chcesz usunac tylko jedno haslo? Y/n");
     int num;
     if (less){
         num = 1;

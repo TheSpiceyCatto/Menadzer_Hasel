@@ -15,6 +15,11 @@ private:
 
 public:
     Password(string nazwa, string haslo, string kategoria);
+
+    /**
+     * Zwraca informacje o haśle.
+     * @return Informacje o haśle.
+     */
     string toString();
 
     const string& getNazwa() const;

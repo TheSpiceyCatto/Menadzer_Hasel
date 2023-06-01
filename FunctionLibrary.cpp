@@ -112,9 +112,8 @@ void Functions::openFile(string directory, string& currentKey, const string& mas
     cin.ignore();
 }
 
-
-
-void Functions::booleanQuestion(const string mess, bool& result){
+bool Functions::booleanQuestion(const string mess){
+    bool result;
     bool answered = false;
     string input;
     do{
@@ -130,6 +129,7 @@ void Functions::booleanQuestion(const string mess, bool& result){
             cout << "Nie rozpoznano odpowiedzi" << endl;
         }
     } while (!answered);
+    return result;
 }
 
 bool Functions::isNumber(string& str) {
