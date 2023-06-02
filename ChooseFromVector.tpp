@@ -12,6 +12,8 @@ template <typename T> T chooseFromVector(const string mess, vector<T> vec, const
         } else {
             cout << err << endl;
         }
+        cin.clear();
+        cin.ignore();
     }
     return vec.at(choice-1);
 }

@@ -63,9 +63,6 @@ void AddPassword::DodajHaslo(vector<Password>& hasla, vector<string>& kategorie,
 
         hasla.push_back(haslo);
         writePassword(directory, haslo, key);
-
-        cin.clear();
-        cin.ignore();
     } else {
         cout << "Brak kategorii, sprobuj \"Pomoc\" lub \"Dodaj Kategorie\"" << endl;
     }

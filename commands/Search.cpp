@@ -51,7 +51,7 @@ void Search::Wyszukaj(vector<Password> hasla, vector<string>& kategorie) {
         }
         if(!buffHasla.empty()){
             for (auto haslo : buffHasla) {
-                cout << haslo;
+                cout << haslo << endl;
             }
         } else {
             cout << "Nie znaleziono." << endl;
